@@ -1,0 +1,97 @@
+{
+  "config.version" : "2.0",
+  "config.project.from.csv" : "false",
+  "config.encoding" : "UTF-8",
+  "config.email.suffix" : "",
+  "config.field.mappings" : {
+    "Description" : {
+      "jira.field" : "description"
+    },
+    "Attachment" : {
+      "jira.field" : "attachment"
+    },
+    "Creator" : {
+      "jira.field" : "reporter"
+    },
+    "Epic Link" : {
+      "existing.custom.field" : "10101"
+    },
+    "Watchers" : {
+      "jira.field" : "watcher"
+    },
+    "Created" : {
+      "jira.field" : "created"
+    },
+    "Resolved" : {
+      "jira.field" : "resolutiondate"
+    },
+    "Time Spent" : {
+      "jira.field" : "timespent"
+    },
+    "Remaining Estimate" : {
+      "jira.field" : "timeestimate"
+    },
+    "Issue id" : {
+      "jira.field" : "issue-id"
+    },
+    "Due Date" : {
+      "jira.field" : "duedate"
+    },
+    "Status" : {
+      "jira.field" : "status"
+    },
+    "Assignee" : {
+      "jira.field" : "assignee"
+    },
+    "Comment" : {
+      "jira.field" : "comment"
+    },
+    "Updated" : {
+      "jira.field" : "updated"
+    },
+    "Issue key" : {
+      "jira.field" : "issuekey"
+    },
+    "Priority" : {
+      "jira.field" : "priority"
+    },
+    "Parent id" : {
+      "jira.field" : "subtask-parent-id"
+    },
+    "Reporter" : {
+      "jira.field" : "reporter"
+    },
+    "Labels" : {
+      "jira.field" : "labels"
+    },
+    "Issue Type" : {
+      "jira.field" : "issuetype"
+    },
+    "Outward issue link (Blocks)" : {
+      "link.type" : "10000"
+    },
+    "Summary" : {
+      "jira.field" : "summary"
+    },
+    "Epic Name" : {
+      "existing.custom.field" : "10103"
+    },
+    "Original Estimate" : {
+      "jira.field" : "timeoriginalestimate"
+    },
+    "Resolution" : {
+      "jira.field" : "resolution"
+    }
+  },
+  "config.value.mappings" : { },
+  "config.delimiter" : ",",
+  "config.project" : {
+    "project.type" : null,
+    "project.key" : null,
+    "project.description" : null,
+    "project.url" : null,
+    "project.name" : null,
+    "project.lead" : null
+  },
+  "config.date.format" : "yyyy-MM-dd hh:mm:ss"
+}
