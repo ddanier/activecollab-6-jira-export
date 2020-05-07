@@ -49,6 +49,13 @@ alone!
 * Set `$SECRET` to something only you know, don't share this!
 * Set `$AC_BASE_URL` to your ActiveCollab installation URL (including a trailing slash)
 
+## The export form
+
+* `Secret`: The Secret you configured. This is a minimal and sloppy way to prevent other using the script. (And **NOT** really secure)
+* `projectId`: The ActiveCollab project ID. See URL when opening a project in ActiveCOllab, the numeric bits.
+* `projectKey`: The project key the project will have in Jira. This is optional, but really set it, I mean, **REALLY**.
+* `openStatus`: The status your open issues should have. Could be `Open` or `To Do`.
+
 # About the import
 
 * Use the provided file `CSV-configuration.txt` to have a pre-configuration for the import
