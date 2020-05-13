@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         <label>hiddenSecurityLevel: <select name="hiddenSecurityLevel">
                 <option></option>
                 <option>Internal</option>
-            </select> (will not be imported, see <a href="https://jira.atlassian.com/browse/JRASERVER-64636">JRASERVER-64636</a>a>, intended to help you doing this manually)</label><br />
+            </select> (will not be imported, see <a href="https://jira.atlassian.com/browse/JRASERVER-64636">JRASERVER-64636</a>, intended to help you doing this manually)</label><br />
         <input type="submit" value="Submit" />
     </form>
     <a href="CSV-configuration.txt">Download import configuration (right click -&gt; save as)</a>

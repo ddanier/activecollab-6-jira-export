@@ -11,7 +11,7 @@ requests will be welcome though (I will not be able to test them).
 
 # Usage
 
-Edit `jira/index.php` to fit your needs. You will most certainly need to only change the configuration on top.
+Edit `jira/create_export.php` to fit your needs. You will most certainly need to only change the configuration on top.
 You will probably even change the `form` on top (adding options).
 
 Then upload the whole `jira/`-folder to your server and open `https://your-domain.name/jira/create_export.php`,
