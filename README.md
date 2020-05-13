@@ -12,6 +12,7 @@ requests will be welcome though (I will not be able to test them).
 # Usage
 
 Edit `jira/index.php` to fit your needs. You will most certainly need to only change the configuration on top.
+You will probably even change the `form` on top (adding options).
 
 Then upload the whole `jira/`-folder to your server and open `https://your-domain.name/jira/create_export.php`,
 enter all details (fill out the form) and grab a nice CSV export.
@@ -55,6 +56,9 @@ alone!
 * `projectId`: The ActiveCollab project ID. See URL when opening a project in ActiveCOllab, the numeric bits.
 * `projectKey`: The project key the project will have in Jira. This is optional, but really set it, I mean, **REALLY**.
 * `openStatus`: The status your open issues should have. Could be `Open` or `To Do`.
+* `doneStatus`: The status your completed issues should have. Normally `Done`.
+* `doneResolution`: The resolution your open issues should have. Normally `Done`.
+* `hiddenSecurityLevel`: Decide whether to export "Hidden from client". WILL NOT BE IMPORTED, but may help change this manually after the import. (see https://jira.atlassian.com/browse/JRASERVER-64636)
 
 # About the import
 
@@ -63,4 +67,6 @@ alone!
 ## After the import
 
 * Check users in the Jira project, all users will be "Developer"'s, probable change that
+* "Hidden from client" tasks will be visible to the client.
 * Archive the ActiveCollab project ;-)
+

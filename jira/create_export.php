@@ -18,8 +18,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     <form method="POST">
         <label>Secret: <input name="SECRET" type="password" /></label><br />
         <label>projectId: <input name="projectId" /></label><br />
-        <label>projectKey: <input name="projectKey" /> (optional, but recommend)</label><br />
-        <label>openStatus: <select name="openStatus"><option>Open</option><option>To Do</option></select></label><br />
+        <label>projectKey: <input name="projectKey" /> (optional, but highly recommend)</label><br />
+        <label>openStatus: <select name="openStatus">
+                <option>Open</option>
+                <option>To Do</option>
+            </select></label><br />
+        <label>doneStatus: <select name="doneStatus">
+                <option>Done</option>
+            </select></label><br />
+        <label>doneResolution: <select name="doneResolution">
+                <option>Done</option>
+            </select></label><br />
+        <label>hiddenSecurityLevel: <select name="hiddenSecurityLevel">
+                <option></option>
+                <option>Internal</option>
+            </select> (will not be imported, see <a href="https://jira.atlassian.com/browse/JRASERVER-64636">JRASERVER-64636</a>a>, intended to help you doing this manually)</label><br />
         <input type="submit" value="Submit" />
     </form>
     <a href="CSV-configuration.txt">Download import configuration (right click -&gt; save as)</a>
@@ -44,6 +57,9 @@ $db->exec('SET names utf8');
 
 $projectKey = isset($_POST["projectKey"]) ? $_POST["projectKey"] : null;
 $openStatus = isset($_POST["openStatus"]) ? $_POST["openStatus"] : 'To Do';
+$doneStatus = isset($_POST["doneStatus"]) ? $_POST["doneStatus"] : 'Done';
+$doneResolution = isset($_POST["doneResolution"]) ? $_POST["doneResolution"] : 'Done';
+$hiddenSecurityLevel = isset($_POST["hiddenSecurityLevel"]) ? $_POST["hiddenSecurityLevel"] : '';
 
 $headers = [
     "Summary",
@@ -67,6 +83,7 @@ $headers = [
     "Original Estimate",
     "Remaining Estimate",
     "Time Spent",
+    "Security Level",
 ];
 $multipleHeaders = [
     "Watchers",
@@ -134,9 +151,9 @@ while ($rowObj = $dbs->fetchObject())
     $row["Issue id"] = 'task:' . $rowObj->id;
     $row["Issue Type"] = 'Task';
     $row["Epic Link"] = 'tasklist:' . $rowObj->task_list_id;
-    $row["Priority"] = $rowObj->is_important ? 'Highest': '';
-    $row["Status"] = is_null($rowObj->completed_on) ? $openStatus : 'Done';
-    $row["Resolution"] = is_null($rowObj->completed_on) ? '' : 'Done';
+    $row["Priority"] = $rowObj->is_important ? 'Highest': 'Medium';
+    $row["Status"] = is_null($rowObj->completed_on) ? $openStatus : $doneStatus;
+    $row["Resolution"] = is_null($rowObj->completed_on) ? '' : $doneResolution;
     $row["Due Date"] = ensure_date_format($rowObj->due_on);
     $row["Created"] = ensure_date_format($rowObj->created_on);
     $row["Reporter"] = $rowObj->created_by_email;
@@ -144,6 +161,7 @@ while ($rowObj = $dbs->fetchObject())
     $row["Updated"] = ensure_date_format($rowObj->updated_on);
     $row["Original Estimate"] = $rowObj->estimate > 0 ? $rowObj->estimate * 3600 : '';
     $row["Assignee"] = isset($rowObj->assignee_email) ? $rowObj->assignee_email : '';
+    $row["Security Level"] = $rowObj->is_hidden_from_clients > 0 ? $hiddenSecurityLevel : '';
 
     // Dependencies / Related
     $subDbs = $db->prepare('SELECT t.* FROM task_dependencies AS td LEFT OUTER JOIN tasks AS t ON (t.id = td.child_id) WHERE td.parent_id = :parent_id');
@@ -218,8 +236,8 @@ while ($rowObj = $dbs->fetchObject())
     $row["Issue key"] = isset($projectKey) ? ($projectKey . '-' . $maxIssueNumber) : '';
     $row["Issue id"] = 'tasklist:' . $rowObj->id;
     $row["Issue Type"] = 'Epic';
-    $row["Status"] = is_null($rowObj->completed_on) ? $openStatus : 'Done';
-    $row["Resolution"] = is_null($rowObj->completed_on) ? '' : 'Done';
+    $row["Status"] = is_null($rowObj->completed_on) ? $openStatus : $doneStatus;
+    $row["Resolution"] = is_null($rowObj->completed_on) ? '' : $doneResolution;
     $row["Due Date"] = $rowObj->due_on;
     $row["Created"] = ensure_date_format($rowObj->created_on);
     $row["Reporter"] = $rowObj->created_by_email;
@@ -241,8 +259,8 @@ while ($rowObj = $dbs->fetchObject())
     $row["Issue id"] = 'subtask:' . $rowObj->id;
     $row["Parent id"] = 'task:' . $rowObj->task_id;
     $row["Issue Type"] = 'Sub-task';
-    $row["Status"] = is_null($rowObj->completed_on) ? $openStatus : 'Done';
-    $row["Resolution"] = is_null($rowObj->completed_on) ? '' : 'Done';
+    $row["Status"] = is_null($rowObj->completed_on) ? $openStatus : $doneStatus;
+    $row["Resolution"] = is_null($rowObj->completed_on) ? '' : $doneResolution;
     $row["Created"] = ensure_date_format($rowObj->created_on);
     $row["Reporter"] = $rowObj->created_by_email;
     $row["Creator"] = $row["Reporter"];
